@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - DEBUG=true
+      - SECRET_KEY=hardcoded_secret
+    volumes:
+      - /etc/passwd:/etc/passwd:ro  # Unnecessary host access
+  
+  database:
+    image: postgres:9.6  # Outdated version
+    environment:
+      POSTGRES_PASSWORD: password123
+    ports:
+      - "5432:5432"  # Exposed database port
