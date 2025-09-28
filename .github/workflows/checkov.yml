@@ -24,3 +24,15 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: reports/checkov-results.sarif
+      - name: Run Checkov scan JSON
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          output_format: json
+          output_file_path: reports/checkov-results.json
+
+      - name: Upload Checkov JSON
+        uses: actions/upload-artifact@v4
+        with:
+          name: checkov-report
+          path: reports/checkov-results.json    
