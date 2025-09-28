@@ -33,3 +33,9 @@ resource "aws_instance" "web" {
     echo "admin:password123" | chpasswd
   EOF
 }
+
+resource "aws_s3_bucket" "bad" {
+  bucket = "demo-bucket"
+  acl    = "public-read"
+}
+
