@@ -1,0 +1,19 @@
+name: trivy-scan
+on: [push]
+jobs:
+  trivy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Trivy - repo + sbom
+        uses: aquasecurity/trivy-action@v0
+        with:
+          scan-type: fs
+          format: cyclonedx # produce SBOM
+          output: reports/trivy-sbom.json
+          exit-code: '0' # don't fail demo pipelines; adjust per policy
+      - name: Upload Trivy SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-sbom
+          path: reports/trivy-sbom.json
