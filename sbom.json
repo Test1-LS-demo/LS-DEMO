@@ -1,0 +1,90 @@
+{
+  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "serialNumber": "urn:uuid:ls-demo-sbom-001",
+  "metadata": {
+    "timestamp": "2025-10-01T22:00:00.000Z",
+    "tools": [
+      {
+        "vendor": "Legit Security",
+        "name": "Demo SBOM Generator",
+        "version": "1.0.0"
+      }
+    ],
+    "component": {
+      "type": "application",
+      "name": "LS-DEMO",
+      "version": "1.0.0",
+      "description": "Demo application for Legit Security ASPM"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "name": "Flask",
+      "version": "1.0.2",
+      "description": "Python web framework",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library", 
+      "name": "Django",
+      "version": "1.11.29",
+      "description": "Python web framework",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "Pillow",
+      "version": "6.2.2", 
+      "description": "Python imaging library",
+      "licenses": [
+        {
+          "license": {
+            "id": "HPND"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "express",
+      "version": "4.16.4",
+      "description": "Node.js web framework",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "axios",
+      "version": "0.19.2",
+      "description": "HTTP client for Node.js",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    }
+  ]
+}
