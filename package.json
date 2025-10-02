@@ -1,0 +1,31 @@
+{
+  "name": "ls-demo-app",
+  "version": "1.0.0",
+  "description": "Demo application for Legit Security ASPM",
+  "main": "app.py",
+  "scripts": {
+    "start": "python app.py",
+    "test": "pytest",
+    "build": "docker build -t ls-demo .",
+    "run": "docker run -p 5000:5000 ls-demo"
+  },
+  "dependencies": {
+    "express": "4.16.4",
+    "lodash": "4.17.15",
+    "moment": "2.24.0",
+    "axios": "0.19.2",
+    "jquery": "3.4.1"
+  },
+  "devDependencies": {
+    "webpack": "4.44.2",
+    "babel-core": "6.26.3",
+    "eslint": "6.8.0"
+  },
+  "keywords": [
+    "demo",
+    "security",
+    "vulnerabilities"
+  ],
+  "author": "Demo User",
+  "license": "MIT"
+}

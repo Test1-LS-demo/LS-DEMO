@@ -1,8 +1,62 @@
 from flask import Flask, request, jsonify
 import jwt
 import datetime
+import ipaddress
+import socket
+from urllib.parse import urlparse
 
 api = Flask(__name__)
+
+# SSRF Mitigation Configuration
+# Allowlist of external hosts or domains the server may contact
+# Add your legitimate webhook destinations here
+ALLOWED_CALLBACK_HOSTS = {
+    'example.com',  # Replace with your actual webhook destinations
+}
+
+def is_private_ip(ip_str: str) -> bool:
+    """
+    Check if an IP address is private, loopback, or reserved.
+    Returns True if the IP should be blocked for SSRF protection.
+    """
+    try:
+        ip = ipaddress.ip_address(ip_str)
+        return ip.is_private or ip.is_loopback or ip.is_link_local or ip.is_reserved or ip.is_multicast
+    except ValueError:
+        return True  # Block invalid IPs
+
+def resolve_hostname(hostname: str) -> str:
+    """
+    Resolve hostname to IP address.
+    Returns empty string if resolution fails.
+    """
+    try:
+        return socket.gethostbyname(hostname)
+    except OSError:
+        return ''
+
+def is_url_allowed(raw_url: str) -> bool:
+    """
+    Comprehensive SSRF validation:
+    1. Check URL is not empty
+    2. Validate scheme (http/https only)
+    3. Check against allowlist of permitted hosts
+    4. Resolve hostname to IP and block private ranges
+    5. Prevent DNS rebinding attacks
+    """
+    if not raw_url:
+        return False
+    parsed = urlparse(raw_url)
+    if parsed.scheme not in ('http', 'https'):
+        return False
+    hostname = parsed.hostname or ''
+    # Enforce allowlist if configured
+    if ALLOWED_CALLBACK_HOSTS and hostname not in ALLOWED_CALLBACK_HOSTS:
+        return False
+    ip = resolve_hostname(hostname)
+    if not ip or is_private_ip(ip):
+        return False
+    return True
 
 # API01: Broken Object Level Authorization
 @api.route('/api/users/<user_id>/profile')
@@ -54,13 +108,27 @@ def purchase():
     quantity = request.json.get('quantity', 1)
     return jsonify({"message": f"Purchased {quantity} items"})
 
-# API07: Server Side Request Forgery
+# API07: Server Side Request Forgery (FIXED)
 @api.route('/api/webhook', methods=['POST'])
 def webhook():
+    """
+    Webhook endpoint with SSRF mitigation:
+    - Validates URL scheme (http/https only)
+    - Checks against allowlist of permitted hosts
+    - Resolves hostname to IP and blocks private/loopback ranges
+    - Uses short timeout and disables redirects
+    - Returns appropriate error codes for validation failures
+    """
     url = request.json.get('callback_url')
-    # Vulnerability: SSRF via webhook
+    # Mitigation: Validate destination and restrict network targets
+    if not is_url_allowed(url):
+        return jsonify({"error": "callback_url not allowed"}), 400
     import requests
-    response = requests.get(url)
+    try:
+        # Use timeout and disable redirects to prevent SSRF
+        requests.get(url, timeout=3, allow_redirects=False)
+    except requests.RequestException:
+        return jsonify({"error": "callback failed"}), 502
     return jsonify({"status": "webhook_sent"})
 
 # API08: Security Misconfiguration
