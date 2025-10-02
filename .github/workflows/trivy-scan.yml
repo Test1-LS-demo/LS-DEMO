@@ -17,3 +17,11 @@ jobs:
         with:
           name: trivy-sbom
           path: reports/trivy-sbom.json
+      - name: Commit SBOM to repository
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          cp reports/trivy-sbom.json sbom-trivy.json
+          git add sbom-trivy.json
+          git diff --staged --quiet || git commit -m "Update SBOM from Trivy scan"
+          git push
