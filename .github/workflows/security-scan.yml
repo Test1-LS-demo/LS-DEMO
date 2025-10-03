@@ -1,0 +1,99 @@
+name: Security Scanning for ASPM Testing
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 2 * * 1'  # Weekly security scans on Mondays at 2 AM
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repository: [LS-DEMO, WebGoat, juice-shop, mutillidae, NodeGoat]
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        repository: Test1-LS-demo/${{ matrix.repository }}
+    
+    - name: Setup Node.js
+      if: matrix.repository == 'juice-shop' || matrix.repository == 'NodeGoat'
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Setup Python
+      if: matrix.repository == 'LS-DEMO'
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Setup Java
+      if: matrix.repository == 'WebGoat'
+      uses: actions/setup-java@v4
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+    
+    - name: Setup PHP
+      if: matrix.repository == 'mutillidae'
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+    
+    - name: Run Trivy Vulnerability Scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+    
+    - name: Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: 'trivy-results.sarif'
+    
+    - name: Run OWASP Dependency Check
+      if: matrix.repository == 'juice-shop' || matrix.repository == 'NodeGoat'
+      uses: dependency-check/Dependency-Check_Action@main
+      with:
+        project: '${{ matrix.repository }}'
+        path: '.'
+        format: 'JSON'
+        out: './reports'
+    
+    - name: Generate SBOM
+      if: matrix.repository == 'juice-shop' || matrix.repository == 'NodeGoat'
+      run: |
+        npm install -g @cyclonedx/cyclonedx-npm
+        cyclonedx-npm --output-file sbom.json
+    
+    - name: Run Safety Check (Python)
+      if: matrix.repository == 'LS-DEMO'
+      run: |
+        pip install safety
+        safety check --json > safety-results.json
+    
+    - name: Run Composer Audit (PHP)
+      if: matrix.repository == 'mutillidae'
+      run: |
+        composer audit --format=json > composer-audit.json
+    
+    - name: Upload Security Results
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-results-${{ matrix.repository }}
+        path: |
+          trivy-results.sarif
+          safety-results.json
+          composer-audit.json
+          sbom.json
+          reports/

@@ -1,0 +1,138 @@
+# ASPM Testing Configuration
+# This file defines the security testing setup for all repositories
+
+aspm_testing:
+  organization: "Test1-LS-demo"
+  repositories:
+    - name: "LS-DEMO"
+      type: "python"
+      language: "Python"
+      framework: "Flask"
+      vulnerabilities:
+        - "A01: Broken Access Control"
+        - "A02: Cryptographic Failures"
+        - "A03: Injection (SQL Injection)"
+        - "A04: Insecure Design"
+        - "A05: Security Misconfiguration"
+        - "A06: Vulnerable and Outdated Components"
+        - "A07: Identification and Authentication Failures"
+        - "A08: Software and Data Integrity Failures"
+        - "A09: Security Logging and Monitoring Failures"
+        - "A10: Server-Side Request Forgery (SSRF)"
+      custom_vulnerabilities:
+        - "DAST01: Reflected XSS"
+        - "DAST02: SQL Injection"
+        - "DAST03: Command Injection"
+        - "DAST04: Path Traversal"
+        - "DAST05: Open Redirect"
+        - "DAST06: SSRF"
+        - "DAST07: Insecure File Upload"
+    
+    - name: "WebGoat"
+      type: "java"
+      language: "Java"
+      framework: "Spring"
+      vulnerabilities:
+        - "OWASP Top 10 vulnerabilities"
+        - "Educational security issues"
+        - "Classic web application vulnerabilities"
+    
+    - name: "juice-shop"
+      type: "typescript"
+      language: "TypeScript/JavaScript"
+      framework: "Node.js/Express"
+      vulnerabilities:
+        - "Modern web application vulnerabilities"
+        - "OWASP Top 10 (2021)"
+        - "API security issues"
+        - "Client-side vulnerabilities"
+        - "Authentication bypass"
+        - "Authorization flaws"
+    
+    - name: "mutillidae"
+      type: "php"
+      language: "PHP"
+      framework: "Custom"
+      vulnerabilities:
+        - "PHP-specific security issues"
+        - "Web application security training"
+        - "Legacy application vulnerabilities"
+    
+    - name: "NodeGoat"
+      type: "nodejs"
+      language: "JavaScript"
+      framework: "Node.js/Express"
+      vulnerabilities:
+        - "Node.js security vulnerabilities"
+        - "JavaScript ecosystem issues"
+        - "NPM package vulnerabilities"
+
+security_tools:
+  static_analysis:
+    - "Trivy"
+    - "OWASP Dependency Check"
+    - "Safety (Python)"
+    - "Composer Audit (PHP)"
+    - "npm audit"
+  
+  dynamic_analysis:
+    - "OWASP ZAP"
+    - "Burp Suite"
+    - "Custom DAST endpoints"
+  
+  sbom_generation:
+    - "CycloneDX"
+    - "SPDX"
+    - "Trivy SBOM"
+
+ci_cd_integration:
+  github_actions:
+    - "Security scanning workflow"
+    - "SBOM generation"
+    - "Vulnerability reporting"
+    - "Automated security testing"
+  
+  triggers:
+    - "Push to main/develop"
+    - "Pull requests"
+    - "Weekly scheduled scans"
+    - "Manual triggers"
+
+aspm_data_sources:
+  vulnerability_data:
+    - "SARIF files from Trivy"
+    - "JSON reports from dependency checks"
+    - "SBOM files (CycloneDX/SPDX)"
+    - "Custom vulnerability reports"
+  
+  infrastructure_data:
+    - "Docker configurations"
+    - "Terraform files"
+    - "Kubernetes manifests"
+    - "CI/CD pipeline configurations"
+  
+  runtime_data:
+    - "Application logs"
+    - "Security events"
+    - "Performance metrics"
+    - "User activity logs"
+
+test_scenarios:
+  vulnerability_detection:
+    - "SAST (Static Application Security Testing)"
+    - "DAST (Dynamic Application Security Testing)"
+    - "SCA (Software Composition Analysis)"
+    - "Container scanning"
+    - "Infrastructure scanning"
+  
+  risk_assessment:
+    - "CVSS scoring"
+    - "Exploitability analysis"
+    - "Business impact assessment"
+    - "Remediation prioritization"
+  
+  compliance_testing:
+    - "OWASP Top 10 compliance"
+    - "PCI DSS requirements"
+    - "SOC 2 controls"
+    - "GDPR compliance"
