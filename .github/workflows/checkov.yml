@@ -1,0 +1,38 @@
+name: Checkov IaC Scan
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  checkov:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v3
+
+      - name: Run Checkov scan
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          output_format: sarif
+          output_file_path: reports/checkov-results.sarif
+
+      - name: Upload SARIF report to GitHub
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: reports/checkov-results.sarif
+      - name: Run Checkov scan JSON
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          output_format: json
+          output_file_path: reports/checkov-results.json
+
+      - name: Upload Checkov JSON
+        uses: actions/upload-artifact@v4
+        with:
+          name: checkov-report
+          path: reports/checkov-results.json    

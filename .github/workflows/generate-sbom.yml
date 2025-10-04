@@ -1,0 +1,47 @@
+name: Generate SBOM for GitHub Dependency Graph
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  generate-sbom:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Generate SBOM with Syft
+      uses: anchore/sbom-action@v0
+      with:
+        path: .
+        format: spdx-json
+        output-file: sbom.spdx.json
+    
+    - name: Upload SBOM to GitHub
+      uses: actions/upload-artifact@v4
+      with:
+        name: sbom
+        path: sbom.spdx.json
+        retention-days: 30
+    
+    - name: Generate CycloneDX SBOM
+      uses: cyclonedx/gh-cyclonedx-action@v1
+      with:
+        path: .
+        output-format: json
+        output-file: cyclonedx-sbom.json
+    
+    - name: Upload CycloneDX SBOM
+      uses: actions/upload-artifact@v4
+      with:
+        name: cyclonedx-sbom
+        path: cyclonedx-sbom.json
+        retention-days: 30
