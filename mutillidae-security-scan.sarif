@@ -1,0 +1,41 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Trivy",
+          "version": "0.45.0",
+          "informationUri": "https://github.com/aquasecurity/trivy"
+        }
+      },
+      "results": [
+        {
+          "ruleId": "CVE-2021-44228",
+          "level": "error",
+          "message": {
+            "text": "Log4Shell vulnerability in Log4j"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mutillidae/package.json"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "security-severity": 10.0,
+            "package": "log4j",
+            "version": "2.14.1",
+            "severity": "Critical",
+            "cve": "CVE-2021-44228",
+            "owasp_category": "A06: Vulnerable Components"
+          }
+        }
+      ]
+    }
+  ]
+}

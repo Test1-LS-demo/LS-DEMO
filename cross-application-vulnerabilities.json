@@ -1,0 +1,65 @@
+{
+  "cross_application_vulnerabilities": {
+    "CVE-2022-24999": {
+      "cve": "CVE-2022-24999",
+      "severity": "High",
+      "description": "Prototype pollution vulnerability in Express.js",
+      "cvss_score": 7.5,
+      "owasp_category": "A06: Vulnerable Components",
+      "affected_repositories": [
+        "juice-shop",
+        "NodeGoat",
+        "LS-DEMO"
+      ],
+      "package": "express",
+      "version": "4.16.4"
+    },
+    "CVE-2021-3749": {
+      "cve": "CVE-2021-3749",
+      "severity": "High",
+      "description": "Server-Side Request Forgery (SSRF) in Axios",
+      "cvss_score": 7.2,
+      "owasp_category": "A06: Vulnerable Components",
+      "affected_repositories": [
+        "juice-shop",
+        "NodeGoat",
+        "LS-DEMO"
+      ],
+      "package": "axios",
+      "version": "0.19.2"
+    },
+    "CVE-2022-24998": {
+      "cve": "CVE-2022-24998",
+      "severity": "Medium",
+      "description": "Denial of Service vulnerability in Express.js",
+      "cvss_score": 5.3,
+      "owasp_category": "A06: Vulnerable Components",
+      "affected_repositories": [
+        "juice-shop",
+        "NodeGoat"
+      ],
+      "package": "express",
+      "version": "4.16.4"
+    },
+    "CVE-2021-3748": {
+      "cve": "CVE-2021-3748",
+      "severity": "Medium",
+      "description": "Information disclosure in Axios",
+      "cvss_score": 4.7,
+      "owasp_category": "A06: Vulnerable Components",
+      "affected_repositories": [
+        "juice-shop",
+        "NodeGoat"
+      ],
+      "package": "axios",
+      "version": "0.19.2"
+    }
+  },
+  "total_cross_app_vulns": 4,
+  "repositories_affected": [
+    "LS-DEMO",
+    "juice-shop",
+    "NodeGoat"
+  ],
+  "generated_at": "2025-10-04T18:24:01.308123"
+}

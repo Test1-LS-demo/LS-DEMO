@@ -1,0 +1,113 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Trivy",
+          "version": "0.45.0",
+          "informationUri": "https://github.com/aquasecurity/trivy"
+        }
+      },
+      "results": [
+        {
+          "ruleId": "CVE-2022-24999",
+          "level": "warning",
+          "message": {
+            "text": "Prototype pollution vulnerability in Express.js"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "NodeGoat/package.json"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "security-severity": 7.5,
+            "package": "express",
+            "version": "4.16.4",
+            "severity": "High",
+            "cve": "CVE-2022-24999",
+            "owasp_category": "A06: Vulnerable Components"
+          }
+        },
+        {
+          "ruleId": "CVE-2021-3749",
+          "level": "warning",
+          "message": {
+            "text": "Server-Side Request Forgery (SSRF) in Axios"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "NodeGoat/package.json"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "security-severity": 7.2,
+            "package": "axios",
+            "version": "0.19.2",
+            "severity": "High",
+            "cve": "CVE-2021-3749",
+            "owasp_category": "A06: Vulnerable Components"
+          }
+        },
+        {
+          "ruleId": "CVE-2022-24998",
+          "level": "warning",
+          "message": {
+            "text": "Denial of Service vulnerability in Express.js"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "NodeGoat/package.json"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "security-severity": 5.3,
+            "package": "express",
+            "version": "4.16.4",
+            "severity": "Medium",
+            "cve": "CVE-2022-24998",
+            "owasp_category": "A06: Vulnerable Components"
+          }
+        },
+        {
+          "ruleId": "CVE-2021-3748",
+          "level": "warning",
+          "message": {
+            "text": "Information disclosure in Axios"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "NodeGoat/package.json"
+                }
+              }
+            }
+          ],
+          "properties": {
+            "security-severity": 4.7,
+            "package": "axios",
+            "version": "0.19.2",
+            "severity": "Medium",
+            "cve": "CVE-2021-3748",
+            "owasp_category": "A06: Vulnerable Components"
+          }
+        }
+      ]
+    }
+  ]
+}

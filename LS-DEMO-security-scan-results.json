@@ -1,0 +1,82 @@
+{
+  "repository": "LS-DEMO",
+  "scan_date": "2024-01-15T10:30:00Z",
+  "summary": {
+    "total_vulnerabilities": 4,
+    "critical": 1,
+    "high": 3,
+    "medium": 0,
+    "low": 0
+  },
+  "vulnerabilities": [
+    {
+      "cve": "CVE-2022-24999",
+      "package": "express",
+      "version": "4.16.4",
+      "severity": "High",
+      "description": "Prototype pollution vulnerability in Express.js",
+      "cvss_score": 7.5,
+      "owasp_category": "A06: Vulnerable Components",
+      "repositories": [
+        "juice-shop",
+        "NodeGoat",
+        "LS-DEMO"
+      ],
+      "status": "Open"
+    },
+    {
+      "cve": "CVE-2021-3749",
+      "package": "axios",
+      "version": "0.19.2",
+      "severity": "High",
+      "description": "Server-Side Request Forgery (SSRF) in Axios",
+      "cvss_score": 7.2,
+      "owasp_category": "A06: Vulnerable Components",
+      "repositories": [
+        "juice-shop",
+        "NodeGoat",
+        "LS-DEMO"
+      ],
+      "status": "Open"
+    },
+    {
+      "cve": "CVE-2018-1000656",
+      "package": "flask",
+      "version": "1.0.2",
+      "severity": "Critical",
+      "description": "Authentication bypass vulnerability in Flask",
+      "cvss_score": 9.1,
+      "owasp_category": "A07: Identification and Authentication Failures",
+      "repositories": [
+        "LS-DEMO"
+      ],
+      "status": "Open"
+    },
+    {
+      "cve": "CVE-2021-35042",
+      "package": "django",
+      "version": "1.11.29",
+      "severity": "High",
+      "description": "SQL injection vulnerability in Django",
+      "cvss_score": 8.1,
+      "owasp_category": "A03: Injection",
+      "repositories": [
+        "LS-DEMO"
+      ],
+      "status": "Open"
+    },
+    {
+      "cve": "CVE-2020-35653",
+      "package": "pillow",
+      "version": "6.2.2",
+      "severity": "High",
+      "description": "Buffer overflow in Pillow image processing",
+      "cvss_score": 7.8,
+      "owasp_category": "A06: Vulnerable Components",
+      "repositories": [
+        "LS-DEMO"
+      ],
+      "status": "Open"
+    }
+  ]
+}
